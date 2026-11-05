@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../../context/AuthContext'
-import { ApiError } from '../../api/client'
+import { useAuthContext } from '../../../context/AuthContext'
+import { ApiError } from '../../../api/client'
+import styles from './LoginPage.module.css'
 
 export function LoginPage() {
   const { login } = useAuthContext()
@@ -28,7 +29,7 @@ export function LoginPage() {
 
   return (
     <div className="centered-page">
-      <div className="brand">
+      <div className={styles.brand}>
         <h1>Youth Awards</h1>
         <p>Admin dashboard</p>
       </div>

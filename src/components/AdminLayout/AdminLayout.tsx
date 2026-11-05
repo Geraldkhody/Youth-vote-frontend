@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../context/AuthContext'
+import { useAuthContext } from '../../context/AuthContext'
+import styles from './AdminLayout.module.css'
 
 export function AdminLayout({ children }: { children: ReactNode }) {
   const { admin, logout } = useAuthContext()
@@ -12,19 +13,19 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="admin-layout">
-      <nav className="admin-sidebar">
-        <span className="admin-sidebar__brand">Youth Awards</span>
-        <span className="admin-sidebar__admin">{admin?.name}</span>
+    <div className={styles.layout}>
+      <nav className={styles.sidebar}>
+        <span className={styles.brand}>Youth Awards</span>
+        <span className={styles.admin}>{admin?.name}</span>
         <NavLink to="/admin/nominations">Nominations</NavLink>
         <NavLink to="/admin/nominees">Nominees</NavLink>
         <NavLink to="/admin/categories">Categories</NavLink>
         <NavLink to="/admin/audit-log">Audit log</NavLink>
-        <button type="button" onClick={handleLogout} className="btn btn-sm btn-secondary admin-sidebar__logout">
+        <button type="button" onClick={handleLogout} className={`btn btn-sm btn-secondary ${styles.logout}`}>
           Logout
         </button>
       </nav>
-      <main className="admin-content">{children}</main>
+      <main className={styles.content}>{children}</main>
     </div>
   )
 }

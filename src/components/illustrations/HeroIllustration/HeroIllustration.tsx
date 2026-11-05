@@ -1,5 +1,7 @@
+import styles from './HeroIllustration.module.css'
+
 // Warm-toned hero graphic: two young people on a stage with a trophy.
-// prefers-reduced-motion is respected via the .hero-illustration__sparkle CSS rule.
+// prefers-reduced-motion is respected via the .sparkle CSS rule.
 export function HeroIllustration() {
   return (
     <svg
@@ -14,7 +16,7 @@ export function HeroIllustration() {
 
       {/* Trophy */}
       <g transform="translate(140,70)">
-        <circle className="hero-illustration__sparkle" cx="20" cy="-6" r="34" fill="var(--color-accent-light)" />
+        <circle className={styles.sparkle} cx="20" cy="-6" r="34" fill="var(--color-accent-light)" />
         <path d="M4 10h32v26a16 16 0 0 1-32 0z" fill="var(--color-accent)" />
         <rect x="12" y="52" width="16" height="10" fill="var(--color-accent-dark)" />
         <rect x="2" y="60" width="36" height="8" rx="2" fill="var(--color-accent-dark)" />

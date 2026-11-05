@@ -8,9 +8,11 @@ import {
   ApiError,
   type Nomination,
   type NomineeSummary,
-} from '../../api/client'
-import { useCategories } from '../../hooks/useCategories'
-import { StatusBadge } from '../../components/StatusBadge'
+} from '../../../api/client'
+import { useCategories } from '../../../hooks/useCategories'
+import { StatusBadge } from '../../../components/StatusBadge/StatusBadge'
+import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
+import styles from './NominationsPage.module.css'
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected'
 
@@ -44,11 +46,8 @@ export function NominationsPage() {
   }, [statusFilter, categoryFilter])
 
   return (
-    <div className="nominations-page">
-      <div className="page-header">
-        <h1>Nominations</h1>
-        <p>Review, approve, reject, or merge submitted nominations.</p>
-      </div>
+    <div>
+      <AdminPageHeader title="Nominations" description="Review, approve, reject, or merge submitted nominations." />
 
       <div className="filters">
         <label>
@@ -184,9 +183,9 @@ function NominationRow({ nomination, onChanged }: { nomination: Nomination; onCh
       </td>
       <td>{new Date(nomination.created_at).toLocaleDateString()}</td>
       <td>
-        {nomination.nominee_id && <div className="nominee-id-tag">Nominee ID: {nomination.nominee_id}</div>}
+        {nomination.nominee_id && <div className={styles.nomineeIdTag}>Nominee ID: {nomination.nominee_id}</div>}
         {nomination.rejection_reason && (
-          <div className="rejection-reason">Reason: {nomination.rejection_reason}</div>
+          <div className={styles.rejectionReason}>Reason: {nomination.rejection_reason}</div>
         )}
       </td>
       <td>

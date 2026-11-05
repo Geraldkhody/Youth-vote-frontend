@@ -1,0 +1,49 @@
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.nominateLink {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+}
+
+.nominateLink:hover,
+.nominateLink.active {
+  background: var(--color-primary-light);
+}
+
+.adminLink {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+
+.adminLink:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}

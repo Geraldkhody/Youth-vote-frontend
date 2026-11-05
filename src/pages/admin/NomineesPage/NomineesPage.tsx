@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getNominees, getNominee, updateNominee, deactivateNominee, ApiError, type NomineeSummary, type Nominee } from '../../api/client'
-import { useCategories } from '../../hooks/useCategories'
+import { getNominees, getNominee, updateNominee, deactivateNominee, ApiError, type NomineeSummary, type Nominee } from '../../../api/client'
+import { useCategories } from '../../../hooks/useCategories'
+import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
+import styles from './NomineesPage.module.css'
 
 export function NomineesPage() {
   const { categories } = useCategories()
@@ -24,11 +26,8 @@ export function NomineesPage() {
   }, [categoryId])
 
   return (
-    <div className="nominees-page">
-      <div className="page-header">
-        <h1>Nominees</h1>
-        <p>This list shows active nominees only.</p>
-      </div>
+    <div>
+      <AdminPageHeader title="Nominees" description="This list shows active nominees only." />
 
       <div className="filters">
         <label>
@@ -48,7 +47,7 @@ export function NomineesPage() {
       {loading && <p className="page-message">Loading…</p>}
 
       {!loading && categoryId && (
-        <ul className="nominee-list">
+        <ul className={styles.list}>
           {nominees.map((nominee) => (
             <li key={nominee.id}>
               <button type="button" onClick={() => setSelectedId(nominee.id)}>
@@ -56,7 +55,7 @@ export function NomineesPage() {
               </button>
             </li>
           ))}
-          {nominees.length === 0 && <li className="nominee-list__empty">No active nominees in this category.</li>}
+          {nominees.length === 0 && <li className={styles.listEmpty}>No active nominees in this category.</li>}
         </ul>
       )}
 
@@ -128,7 +127,7 @@ function NomineeDetail({ nomineeId, onChanged }: { nomineeId: number; onChanged:
   }
 
   return (
-    <div className="nominee-detail card">
+    <div className={`${styles.detail} card`}>
       <h2>
         {nominee.code} — {nominee.full_name}
       </h2>
@@ -149,7 +148,7 @@ function NomineeDetail({ nomineeId, onChanged }: { nomineeId: number; onChanged:
       {!nominee.is_active && <p className="page-note">Deactivated: {nominee.deactivation_reason}</p>}
 
       {nominee.is_active && (
-        <div className="deactivate-section">
+        <div className={styles.deactivateSection}>
           <button type="button" className="btn btn-danger" onClick={() => setShowDeactivate((v) => !v)} disabled={saving}>
             Deactivate
           </button>

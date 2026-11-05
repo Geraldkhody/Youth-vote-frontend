@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link } from 'react-router-dom'
-import { useCategories } from '../hooks/useCategories'
-import { createNomination, ApiError } from '../api/client'
-import { validateNominationForm, type NominationFormValues, type NominationFormErrors } from '../utils/validation'
-import { PublicHeader } from '../components/PublicHeader'
+import { useCategories } from '../../hooks/useCategories'
+import { createNomination, ApiError } from '../../api/client'
+import { validateNominationForm, type NominationFormValues, type NominationFormErrors } from '../../utils/validation'
+import { PublicHeader } from '../../components/PublicHeader/PublicHeader'
 
 const EMPTY_VALUES: NominationFormValues = {
   category_id: '',
@@ -59,12 +58,8 @@ export function NominatePage() {
     <div>
       <PublicHeader />
       <div className="centered-page">
-        <Link to="/" className="back-link">
-          ← Back to home
-        </Link>
-
         <div className="card">
-          <h1>Nominate someone</h1>
+          <h1 >Nominate someone</h1>
           <p>Fill in the details below. We&apos;ll review every nomination before it&apos;s published.</p>
 
           {success && (

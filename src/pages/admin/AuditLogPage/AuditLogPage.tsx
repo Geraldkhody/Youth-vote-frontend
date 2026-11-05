@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { getAuditLog, ApiError, type AuditLogEntry } from '../../api/client'
+import { getAuditLog, ApiError, type AuditLogEntry } from '../../../api/client'
+import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
 
 export function AuditLogPage() {
   const [entries, setEntries] = useState<AuditLogEntry[]>([])
@@ -17,11 +18,8 @@ export function AuditLogPage() {
   }, [actionFilter])
 
   return (
-    <div className="audit-log-page">
-      <div className="page-header">
-        <h1>Audit log</h1>
-        <p>Every admin action, newest first.</p>
-      </div>
+    <div>
+      <AdminPageHeader title="Audit log" description="Every admin action, newest first." />
 
       <div className="filters">
         <label>

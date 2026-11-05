@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { RequireAdmin } from './RequireAdmin'
-import * as client from '../api/client'
-import { AuthProvider } from '../context/AuthContext'
+import * as client from '../../api/client'
+import { AuthProvider } from '../../context/AuthContext'
 
-vi.mock('../api/client', async () => {
-  const actual = await vi.importActual<typeof client>('../api/client')
+vi.mock('../../api/client', async () => {
+  const actual = await vi.importActual<typeof client>('../../api/client')
   return { ...actual, getCurrentAdmin: vi.fn() }
 })
 

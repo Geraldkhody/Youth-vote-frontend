@@ -1,0 +1,20 @@
+.sparkle {
+  animation: sparkle-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes sparkle-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sparkle {
+    animation: none !important;
+  }
+}

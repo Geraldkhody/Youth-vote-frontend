@@ -3,10 +3,10 @@ import { MemoryRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { NominatePage } from './NominatePage'
-import * as client from '../api/client'
+import * as client from '../../api/client'
 
-vi.mock('../api/client', async () => {
-  const actual = await vi.importActual<typeof client>('../api/client')
+vi.mock('../../api/client', async () => {
+  const actual = await vi.importActual<typeof client>('../../api/client')
   return {
     ...actual,
     getCategories: vi.fn(),

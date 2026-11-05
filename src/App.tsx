@@ -1,14 +1,14 @@
 import { Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import { RequireAdmin } from './components/RequireAdmin'
-import { AdminLayout } from './components/AdminLayout'
-import { HomePage } from './pages/HomePage'
-import { NominatePage } from './pages/NominatePage'
-import { LoginPage } from './pages/admin/LoginPage'
-import { NominationsPage } from './pages/admin/NominationsPage'
-import { NomineesPage } from './pages/admin/NomineesPage'
-import { CategoriesPage } from './pages/admin/CategoriesPage'
-import { AuditLogPage } from './pages/admin/AuditLogPage'
+import { RequireAdmin } from './components/RequireAdmin/RequireAdmin'
+import { AdminLayout } from './components/AdminLayout/AdminLayout'
+import { HomePage } from './pages/HomePage/HomePage'
+import { NominatePage } from './pages/NominatePage/NominatePage'
+import { LoginPage } from './pages/admin/LoginPage/LoginPage'
+import { NominationsPage } from './pages/admin/NominationsPage/NominationsPage'
+import { NomineesPage } from './pages/admin/NomineesPage/NomineesPage'
+import { CategoriesPage } from './pages/admin/CategoriesPage/CategoriesPage'
+import { AuditLogPage } from './pages/admin/AuditLogPage/AuditLogPage'
 
 function NotFound() {
   return <p className="page-message">Page not found.</p>

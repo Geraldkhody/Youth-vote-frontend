@@ -1,4 +1,4 @@
-import type { Nomination } from '../api/client'
+import type { Nomination } from '../../api/client'
 
 const LABELS: Record<Nomination['status'], string> = {
   pending: 'Pending',

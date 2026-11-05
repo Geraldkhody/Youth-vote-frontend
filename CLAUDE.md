@@ -19,7 +19,10 @@ A parish youth awards system. Public users nominate people for award categories 
 
 - Vite, React, TypeScript (react-ts template), react-router-dom, vitest with @testing-library/react.
 - Experienced-level React: function components, hooks, typed API responses, small custom hooks where they help.
-- No Redux. No UI component libraries. No CSS frameworks. Plain CSS in `src/index.css`.
+- No Redux. No UI component libraries. No CSS frameworks.
+- Every component and page lives in its own folder named after it, containing its `.tsx` file, its `.module.css` file if it has component-specific styles, and its `.test.tsx` file if it has tests (e.g. `src/pages/NomineesPage/NomineesPage.tsx` + `NomineesPage.module.css`). Import CSS Modules as `styles` and reference classes via `styles.foo`.
+- Styles genuinely shared across multiple components (buttons, form fields, cards, tables, status messages, page layout) stay as plain global classes in `src/index.css`. Only give a component its own `.module.css` for styles unique to that component. A component with no component-specific styles has no CSS file.
+- To style a global class nested inside a CSS Module selector (e.g. a shared `.btn` inside `.detail`), wrap it in `:global(...)` so CSS Modules doesn't hash it.
 - Mobile first. Inputs and buttons at least 44px tall. Admin tables scroll horizontally on small screens.
 - All API calls go through `src/api/client.ts`, using `credentials: "include"`. No `fetch` calls in components.
 - Errors from the server are shown as returned in the `error` field of the response body.

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
-import { getAllCategories, createCategory, updateCategory, ApiError, type Category } from '../../api/client'
+import { getAllCategories, createCategory, updateCategory, ApiError, type Category } from '../../../api/client'
+import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
+import styles from './CategoriesPage.module.css'
 
 const EMPTY_FORM = { name: '', code_letter: '', description: '' }
 
@@ -22,16 +24,16 @@ export function CategoriesPage() {
   useEffect(reload, [])
 
   return (
-    <div className="categories-page">
-      <div className="page-header page-header--with-action">
-        <div>
-          <h1>Categories</h1>
-          <p>Create and manage award categories.</p>
-        </div>
-        <button type="button" className="btn btn-primary" onClick={() => setShowAddForm((v) => !v)}>
-          {showAddForm ? 'Cancel' : '+ Add category'}
-        </button>
-      </div>
+    <div>
+      <AdminPageHeader
+        title="Categories"
+        description="Create and manage award categories."
+        action={
+          <button type="button" className="btn btn-primary" onClick={() => setShowAddForm((v) => !v)}>
+            {showAddForm ? 'Cancel' : '+ Add category'}
+          </button>
+        }
+      />
 
       {showAddForm && (
         <AddCategoryForm
@@ -100,7 +102,7 @@ function AddCategoryForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <div className="card add-category-form">
+    <div className={`card ${styles.addForm}`}>
       <h2>New category</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} noValidate>
