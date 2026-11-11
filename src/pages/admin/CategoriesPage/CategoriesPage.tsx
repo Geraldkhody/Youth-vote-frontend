@@ -121,7 +121,7 @@ function AddCategoryForm({ onCreated }: { onCreated: () => void }) {
           <input
             id="new_category_letter"
             type="text"
-            maxLength={1}
+            maxLength={3}
             value={values.code_letter}
             onChange={(e) => setValues((prev) => ({ ...prev, code_letter: e.target.value }))}
           />
