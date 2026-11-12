@@ -135,6 +135,12 @@ export function updateCategory(
   })
 }
 
+export function deleteCategory(id: number): Promise<void> {
+  return request(`/api/categories/${id}`, {
+    method: 'DELETE',
+  })
+}
+
 export function createNomination(input: NominationInput): Promise<Nomination> {
   return request('/api/nominations', {
     method: 'POST',

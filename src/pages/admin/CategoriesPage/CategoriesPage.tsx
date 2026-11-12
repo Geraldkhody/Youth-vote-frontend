@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
-import { getAllCategories, createCategory, updateCategory, ApiError, type Category } from '../../../api/client'
+import { getAllCategories, createCategory, updateCategory, deleteCategory, ApiError, type Category } from '../../../api/client'
 import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
 import styles from './CategoriesPage.module.css'
 
@@ -148,6 +148,7 @@ function AddCategoryForm({ onCreated }: { onCreated: () => void }) {
 function CategoryRow({ category, onChanged }: { category: Category; onChanged: () => void }) {
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(category.name)
+  const [codeLetter, setCodeLetter] = useState(category.code_letter)
   const [description, setDescription] = useState(category.description ?? '')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -156,7 +157,7 @@ function CategoryRow({ category, onChanged }: { category: Category; onChanged: (
     setBusy(true)
     setError(null)
     try {
-      await updateCategory(category.id, { name, description })
+      await updateCategory(category.id, { name, code_letter: codeLetter.trim(), description })
       setEditing(false)
       onChanged()
     } catch (err) {
@@ -164,6 +165,13 @@ function CategoryRow({ category, onChanged }: { category: Category; onChanged: (
     } finally {
       setBusy(false)
     }
+  }
+
+  function handleCancel() {
+    setName(category.name)
+    setCodeLetter(category.code_letter)
+    setDescription(category.description ?? '')
+    setEditing(false)
   }
 
   async function handleToggleActive() {
@@ -179,9 +187,35 @@ function CategoryRow({ category, onChanged }: { category: Category; onChanged: (
     }
   }
 
+  async function handleDelete() {
+    if (!window.confirm(`Delete category "${category.name}"? This cannot be undone.`)) {
+      return
+    }
+    setBusy(true)
+    setError(null)
+    try {
+      await deleteCategory(category.id)
+      onChanged()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Failed to delete category.')
+      setBusy(false)
+    }
+  }
+
   return (
     <tr>
-      <td>{category.code_letter}</td>
+      <td>
+        {editing ? (
+          <input
+            type="text"
+            maxLength={3}
+            value={codeLetter}
+            onChange={(e) => setCodeLetter(e.target.value)}
+          />
+        ) : (
+          category.code_letter
+        )}
+      </td>
       <td>
         {editing ? (
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -209,7 +243,7 @@ function CategoryRow({ category, onChanged }: { category: Category; onChanged: (
                 <button type="button" className="btn btn-sm btn-primary" onClick={handleSave} disabled={busy}>
                   Save
                 </button>
-                <button type="button" className="btn btn-sm btn-secondary" onClick={() => setEditing(false)} disabled={busy}>
+                <button type="button" className="btn btn-sm btn-secondary" onClick={handleCancel} disabled={busy}>
                   Cancel
                 </button>
               </>
@@ -225,6 +259,9 @@ function CategoryRow({ category, onChanged }: { category: Category; onChanged: (
                   disabled={busy}
                 >
                   {category.is_active ? 'Deactivate' : 'Reactivate'}
+                </button>
+                <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete} disabled={busy}>
+                  Delete
                 </button>
               </>
             )}
