@@ -17,6 +17,12 @@ export function PublicHeader() {
           >
             Nominate
           </NavLink>
+          <NavLink
+            to="/nominees"
+            className={({ isActive }) => `${styles.nominateLink} ${isActive ? styles.active : ''}`}
+          >
+            Nominees
+          </NavLink>
           <Link to="/admin/login" className={styles.adminLink}>
             Admin
           </Link>

@@ -4,9 +4,10 @@ import { RequireAdmin } from './components/RequireAdmin/RequireAdmin'
 import { AdminLayout } from './components/AdminLayout/AdminLayout'
 import { HomePage } from './pages/HomePage/HomePage'
 import { NominatePage } from './pages/NominatePage/NominatePage'
+import { NomineesPage } from './pages/NomineesPage/NomineesPage'
 import { LoginPage } from './pages/admin/LoginPage/LoginPage'
 import { NominationsPage } from './pages/admin/NominationsPage/NominationsPage'
-import { NomineesPage } from './pages/admin/NomineesPage/NomineesPage'
+import { NomineesPage as AdminNomineesPage } from './pages/admin/NomineesPage/NomineesPage'
 import { CategoriesPage } from './pages/admin/CategoriesPage/CategoriesPage'
 import { AuditLogPage } from './pages/admin/AuditLogPage/AuditLogPage'
 
@@ -20,6 +21,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/nominate" element={<NominatePage />} />
+        <Route path="/nominees" element={<NomineesPage />} />
         <Route path="/admin/login" element={<LoginPage />} />
         <Route
           path="/admin/nominations"
@@ -36,7 +38,7 @@ export function App() {
           element={
             <RequireAdmin>
               <AdminLayout>
-                <NomineesPage />
+                <AdminNomineesPage />
               </AdminLayout>
             </RequireAdmin>
           }

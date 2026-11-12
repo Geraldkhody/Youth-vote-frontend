@@ -1,71 +1,98 @@
 import { useEffect, useState } from 'react'
-import { getNominees, getNominee, updateNominee, deactivateNominee, ApiError, type NomineeSummary, type Nominee } from '../../../api/client'
+import {
+  getNominees,
+  getNominee,
+  updateNominee,
+  deactivateNominee,
+  ApiError,
+  type NomineeSummary,
+  type Nominee,
+  type Category,
+} from '../../../api/client'
 import { useCategories } from '../../../hooks/useCategories'
 import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
 import styles from './NomineesPage.module.css'
 
 export function NomineesPage() {
   const { categories } = useCategories()
-  const [categoryId, setCategoryId] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
   const [nominees, setNominees] = useState<NomineeSummary[]>([])
   const [loading, setLoading] = useState(false)
   const [listError, setListError] = useState<string | null>(null)
   const [selectedId, setSelectedId] = useState<number | null>(null)
 
   useEffect(() => {
-    if (!categoryId) {
+    if (!selectedCategory) {
       setNominees([])
       return
     }
     setLoading(true)
     setListError(null)
-    getNominees(Number(categoryId))
+    getNominees(selectedCategory.id)
       .then(setNominees)
       .catch((err) => setListError(err instanceof ApiError ? err.message : 'Failed to load nominees.'))
       .finally(() => setLoading(false))
-  }, [categoryId])
+  }, [selectedCategory])
+
+  function selectCategory(category: Category) {
+    setSelectedCategory(category)
+    setSelectedId(null)
+  }
 
   return (
     <div>
       <AdminPageHeader title="Nominees" description="This list shows active nominees only." />
 
-      <div className="filters">
-        <label>
-          Category
-          <select value={categoryId} onChange={(e) => { setCategoryId(e.target.value); setSelectedId(null) }}>
-            <option value="">Choose a category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      {listError && <p className="error-message">{listError}</p>}
-      {loading && <p className="page-message">Loading…</p>}
-
-      {!loading && categoryId && (
-        <ul className={styles.list}>
-          {nominees.map((nominee) => (
-            <li key={nominee.id}>
-              <button type="button" onClick={() => setSelectedId(nominee.id)}>
-                {nominee.code} — {nominee.full_name}
-              </button>
-            </li>
+      {!selectedCategory && (
+        <div className={styles.categoryGrid}>
+          {categories.map((category) => (
+            <button
+              type="button"
+              key={category.id}
+              className={styles.categoryCard}
+              onClick={() => selectCategory(category)}
+            >
+              <h3>{category.name}</h3>
+              {category.description && <p>{category.description}</p>}
+            </button>
           ))}
-          {nominees.length === 0 && <li className={styles.listEmpty}>No active nominees in this category.</li>}
-        </ul>
+          {categories.length === 0 && <p className="page-message">No categories yet.</p>}
+        </div>
       )}
 
-      {selectedId !== null && (
-        <NomineeDetail
-          nomineeId={selectedId}
-          onChanged={() => {
-            getNominees(Number(categoryId)).then(setNominees)
-          }}
-        />
+      {selectedCategory && (
+        <>
+          <button type="button" className="btn btn-secondary" onClick={() => setSelectedCategory(null)}>
+            ← Back to categories
+          </button>
+
+          <h2 className={styles.selectedCategoryName}>{selectedCategory.name}</h2>
+
+          {listError && <p className="error-message">{listError}</p>}
+          {loading && <p className="page-message">Loading…</p>}
+
+          {!loading && (
+            <ul className={styles.list}>
+              {nominees.map((nominee) => (
+                <li key={nominee.id}>
+                  <button type="button" onClick={() => setSelectedId(nominee.id)}>
+                    {nominee.code} — {nominee.full_name}
+                  </button>
+                </li>
+              ))}
+              {nominees.length === 0 && <li className={styles.listEmpty}>No active nominees in this category.</li>}
+            </ul>
+          )}
+
+          {selectedId !== null && (
+            <NomineeDetail
+              nomineeId={selectedId}
+              onChanged={() => {
+                getNominees(selectedCategory.id).then(setNominees)
+              }}
+            />
+          )}
+        </>
       )}
     </div>
   )

@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import {
   getNominations,
+  getAllCategories,
   approveNomination,
   rejectNomination,
   mergeNomination,
   getNominees,
+  getNominee,
   ApiError,
   type Nomination,
   type NomineeSummary,
+  type Category,
 } from '../../../api/client'
-import { useCategories } from '../../../hooks/useCategories'
 import { StatusBadge } from '../../../components/StatusBadge/StatusBadge'
 import { AdminPageHeader } from '../../../components/AdminPageHeader/AdminPageHeader'
 import styles from './NominationsPage.module.css'
@@ -17,12 +19,16 @@ import styles from './NominationsPage.module.css'
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected'
 
 export function NominationsPage() {
-  const { categories } = useCategories()
+  const [categories, setCategories] = useState<Category[]>([])
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [categoryFilter, setCategoryFilter] = useState('')
   const [nominations, setNominations] = useState<Nomination[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    getAllCategories().then(setCategories).catch(() => {})
+  }, [])
 
   async function reload() {
     setLoading(true)
@@ -83,20 +89,21 @@ export function NominationsPage() {
             <thead>
               <tr>
                 <th>Nominee</th>
+                <th>Category</th>
                 <th>Nominator</th>
                 <th>Status</th>
                 <th>Created</th>
-                <th>Details</th>
+                <th>Nominee code</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {nominations.map((nomination) => (
-                <NominationRow key={nomination.id} nomination={nomination} onChanged={reload} />
+                <NominationRow key={nomination.id} nomination={nomination} categories={categories} onChanged={reload} />
               ))}
               {nominations.length === 0 && (
                 <tr>
-                  <td colSpan={6}>No nominations found.</td>
+                  <td colSpan={7}>No nominations found.</td>
                 </tr>
               )}
             </tbody>
@@ -107,13 +114,31 @@ export function NominationsPage() {
   )
 }
 
-function NominationRow({ nomination, onChanged }: { nomination: Nomination; onChanged: () => void }) {
+function NominationRow({
+  nomination,
+  categories,
+  onChanged,
+}: {
+  nomination: Nomination
+  categories: Category[]
+  onChanged: () => void
+}) {
+  const category = categories.find((c) => c.id === nomination.category_id)
   const [actionError, setActionError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const [rejectReason, setRejectReason] = useState('')
   const [showReject, setShowReject] = useState(false)
   const [nominees, setNominees] = useState<NomineeSummary[] | null>(null)
   const [selectedNomineeId, setSelectedNomineeId] = useState('')
+  const [nomineeCode, setNomineeCode] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (nomination.status === 'approved' && nomination.nominee_id) {
+      getNominee(nomination.nominee_id)
+        .then((nominee) => setNomineeCode(nominee.code))
+        .catch(() => {})
+    }
+  }, [nomination.status, nomination.nominee_id])
 
   async function handleApprove() {
     setBusy(true)
@@ -173,6 +198,7 @@ function NominationRow({ nomination, onChanged }: { nomination: Nomination; onCh
         <br />
         <small>{nomination.nominee_phone}</small>
       </td>
+      <td>{category ? `${category.code_letter} — ${category.name}` : nomination.category_id}</td>
       <td>
         {nomination.nominator_name}
         <br />
@@ -183,7 +209,9 @@ function NominationRow({ nomination, onChanged }: { nomination: Nomination; onCh
       </td>
       <td>{new Date(nomination.created_at).toLocaleDateString()}</td>
       <td>
-        {nomination.nominee_id && <div className={styles.nomineeIdTag}>Nominee ID: {nomination.nominee_id}</div>}
+        {nomination.status === 'approved' && nomineeCode && (
+          <div className={styles.nomineeIdTag}>{nomineeCode}</div>
+        )}
         {nomination.rejection_reason && (
           <div className={styles.rejectionReason}>Reason: {nomination.rejection_reason}</div>
         )}
