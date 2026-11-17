@@ -4,6 +4,9 @@ import { useCategories } from '../../hooks/useCategories'
 import { createNomination, ApiError } from '../../api/client'
 import { validateNominationForm, type NominationFormValues, type NominationFormErrors } from '../../utils/validation'
 import { PublicHeader } from '../../components/PublicHeader/PublicHeader'
+import { Card } from '../../components/ui/Card/Card'
+import { Button } from '../../components/ui/Button/Button'
+import styles from './NominatePage.module.css'
 
 const EMPTY_VALUES: NominationFormValues = {
   category_id: '',
@@ -55,12 +58,12 @@ export function NominatePage() {
   }
 
   return (
-    <div>
+    <div className={styles.page}>
       <PublicHeader />
-      <div className="centered-page">
-        <div className="card">
-          <h1 >Nominate someone</h1>
-          <p>Fill in the details below. We&apos;ll review every nomination before it&apos;s published.</p>
+      <div className={styles.container}>
+        <Card className={styles.card}>
+          <h1 className={styles.heading}>Nominate someone</h1>
+          <p className={styles.intro}>Fill in the details below. We&apos;ll review every nomination before it&apos;s published.</p>
 
           {success && (
             <p className="success-message">Thank you. Your nomination has been received and is pending review.</p>
@@ -134,11 +137,11 @@ export function NominatePage() {
               {errors.nominator_phone && <p className="field-error">{errors.nominator_phone}</p>}
             </div>
 
-            <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
+            <Button type="submit" className={styles.submitButton} disabled={submitting}>
               {submitting ? 'Submitting…' : 'Submit nomination'}
-            </button>
+            </Button>
           </form>
-        </div>
+        </Card>
       </div>
     </div>
   )

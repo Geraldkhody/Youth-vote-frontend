@@ -1,0 +1,25 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-8);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.brandTone {
+  background: var(--brand-fill);
+  border-color: var(--brand-fill);
+  color: #ffffff;
+}
+
+.accentTop {
+  border-top: 4px solid var(--accent-fill);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+}

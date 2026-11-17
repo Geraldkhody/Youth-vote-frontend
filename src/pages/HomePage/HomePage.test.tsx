@@ -51,4 +51,12 @@ describe('HomePage', () => {
 
     expect(await screen.findByText(/categories will be published here soon/i)).toBeInTheDocument()
   })
+
+  it('renders a complete hero with no photo files present, falling back to the SVG illustration', async () => {
+    mockedGetCategories.mockResolvedValue([])
+    renderHomePage()
+
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /celebrating/i })).toBeInTheDocument()
+  })
 })

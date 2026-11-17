@@ -3,6 +3,7 @@ import { useCategories } from '../../hooks/useCategories'
 import { getNominees, ApiError, type NomineeSummary, type Category } from '../../api/client'
 import { PublicHeader } from '../../components/PublicHeader/PublicHeader'
 import { StarIcon } from '../../components/illustrations/StarIcon/StarIcon'
+import { Button } from '../../components/ui/Button/Button'
 import styles from './NomineesPage.module.css'
 
 export function NomineesPage() {
@@ -23,11 +24,11 @@ export function NomineesPage() {
   }, [selectedCategory])
 
   return (
-    <div>
+    <div className={styles.page}>
       <PublicHeader />
 
-      <section className="page">
-        <h1>Nominees</h1>
+      <section className={styles.container}>
+        <h1 className={styles.heading}>Nominees</h1>
 
         {!selectedCategory && (
           <>
@@ -59,9 +60,9 @@ export function NomineesPage() {
 
         {selectedCategory && (
           <div>
-            <button type="button" className="btn btn-secondary" onClick={() => setSelectedCategory(null)}>
+            <Button variant="secondary" onClick={() => setSelectedCategory(null)}>
               ← Back to categories
-            </button>
+            </Button>
 
             <h2 className={styles.selectedCategoryName}>{selectedCategory.name}</h2>
 

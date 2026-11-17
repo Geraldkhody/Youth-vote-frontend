@@ -1,0 +1,31 @@
+.page {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-18);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.heading {
+  color: var(--ink);
+  font-size: 1.5rem;
+  margin: 0 0 var(--space-1);
+}
+
+.intro {
+  color: var(--muted);
+  margin: 0 0 var(--space-4);
+}
+
+.submitButton {
+  width: 100%;
+}
