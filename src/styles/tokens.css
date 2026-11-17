@@ -13,6 +13,12 @@
   --accent-fill-hover: #ad8a22;
   --accent-ink: #1a1a2e;
 
+  /* Fixed icon tints: decorative SVG icons pair these with the constant
+     *-fill colours above for their strokes, so the icons look the same in
+     both themes instead of inverting when --brand-light/--accent-light flip. */
+  --icon-tint-brand: #e8ebf3;
+  --icon-tint-accent: #f6ecd0;
+
   --bg: #faf7f2;
   --surface: #ffffff;
   --ink: #1a1a2e;

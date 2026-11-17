@@ -101,7 +101,7 @@ export function HomePage() {
             <span className={styles.pathEyebrow}>Paid by Mobile Money</span>
             <h2 className={styles.pathHeading}>Vote for a nominee</h2>
             <p className={styles.pathText}>
-              Browse approved nominees, then cast your vote through the USSD menu. One vote, GH₵1.00.
+              Browse approved nominees, then cast your vote through the USSD menu. One vote, GH₵0.50.
             </p>
             <Button to="/nominees" variant="primary">
               Browse nominees

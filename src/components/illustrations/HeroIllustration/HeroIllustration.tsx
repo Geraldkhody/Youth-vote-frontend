@@ -10,13 +10,13 @@ export function HeroIllustration() {
       aria-label="Illustration of young people celebrating on a stage with a trophy"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <ellipse cx="160" cy="215" rx="140" ry="16" fill="var(--accent-light)" />
+      <ellipse cx="160" cy="215" rx="140" ry="16" fill="var(--icon-tint-accent)" />
       <rect x="40" y="150" width="240" height="20" rx="4" fill="var(--brand-fill)" />
       <rect x="70" y="170" width="180" height="40" rx="4" fill="var(--brand-fill-hover)" />
 
       {/* Trophy */}
       <g transform="translate(140,70)">
-        <circle className={styles.sparkle} cx="20" cy="-6" r="34" fill="var(--accent-light)" />
+        <circle className={styles.sparkle} cx="20" cy="-6" r="34" fill="var(--icon-tint-accent)" />
         <path d="M4 10h32v26a16 16 0 0 1-32 0z" fill="var(--accent-fill)" />
         <rect x="12" y="52" width="16" height="10" fill="var(--accent-fill-hover)" />
         <rect x="2" y="60" width="36" height="8" rx="2" fill="var(--accent-fill-hover)" />

@@ -2,7 +2,7 @@
 export function NominateIcon() {
   return (
     <svg viewBox="0 0 48 48" role="img" aria-label="Nominate someone icon" xmlns="http://www.w3.org/2000/svg">
-      <rect x="8" y="6" width="28" height="36" rx="3" fill="var(--brand-light)" stroke="var(--brand-fill)" strokeWidth="2" />
+      <rect x="8" y="6" width="28" height="36" rx="3" fill="var(--icon-tint-brand)" stroke="var(--brand-fill)" strokeWidth="2" />
       <line x1="14" y1="16" x2="30" y2="16" stroke="var(--brand-fill)" strokeWidth="2" strokeLinecap="round" />
       <line x1="14" y1="23" x2="30" y2="23" stroke="var(--brand-fill)" strokeWidth="2" strokeLinecap="round" />
       <path d="M14 30h8" stroke="var(--brand-fill)" strokeWidth="2" strokeLinecap="round" />
