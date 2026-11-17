@@ -1,0 +1,75 @@
+.region {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 360px;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-hover);
+  font-size: 0.9rem;
+  animation: slide-in 0.2s ease-out;
+}
+
+.success {
+  background: var(--color-success-light);
+  color: var(--color-success);
+  border: 1px solid color-mix(in srgb, var(--color-success) 35%, var(--color-success-light));
+}
+
+.error {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 35%, var(--color-danger-light));
+}
+
+.toast span {
+  flex: 1;
+}
+
+.dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 0.85rem;
+  padding: 0.25rem;
+  min-height: 0;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
+
+@media (min-width: 480px) {
+  .region {
+    left: auto;
+  }
+}

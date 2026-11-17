@@ -25,6 +25,17 @@
   --muted: #4a4a5e;
   --border: #e6e0d6;
 
+  /* Semantic status colours: text + background, for both themes. Used for
+     status badges, toasts and inline errors across the admin area. */
+  --success: #166534;
+  --success-bg: #e3f6e9;
+  --warning: #6b5400;
+  --warning-bg: #fff3cd;
+  --danger: #a7291b;
+  --danger-bg: #fbeae8;
+  --info: #1d4b94;
+  --info-bg: #e3ebfd;
+
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-pill: 999px;
@@ -72,6 +83,15 @@
     --muted: #b7bace;
     --border: #2b3356;
 
+    --success: #7fd9a0;
+    --success-bg: #13301f;
+    --warning: #f0c75e;
+    --warning-bg: #3a2c05;
+    --danger: #ff9a8d;
+    --danger-bg: #3b1613;
+    --info: #9cc0ff;
+    --info-bg: #16284d;
+
     --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.35);
     --shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.5);
   }
@@ -94,6 +114,15 @@
   --ink: #f1f0f5;
   --muted: #b7bace;
   --border: #2b3356;
+
+  --success: #7fd9a0;
+  --success-bg: #13301f;
+  --warning: #f0c75e;
+  --warning-bg: #3a2c05;
+  --danger: #ff9a8d;
+  --danger-bg: #3b1613;
+  --info: #9cc0ff;
+  --info-bg: #16284d;
 
   --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.35);
   --shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.5);

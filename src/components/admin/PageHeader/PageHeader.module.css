@@ -1,20 +1,27 @@
 .header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .header h1 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .header p {
   margin: 0;
   color: var(--color-text-muted);
+  font-size: 0.92rem;
 }
 
-.withAction {
+.withActions {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }

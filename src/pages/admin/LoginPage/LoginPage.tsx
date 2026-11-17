@@ -3,6 +3,9 @@ import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../../context/AuthContext'
 import { ApiError } from '../../../api/client'
+import { Button } from '../../../components/ui/Button/Button'
+import { FormField } from '../../../components/admin/FormField/FormField'
+import { InlineError } from '../../../components/admin/InlineError/InlineError'
 import styles from './LoginPage.module.css'
 
 export function LoginPage() {
@@ -28,31 +31,29 @@ export function LoginPage() {
   }
 
   return (
-    <div className="centered-page">
+    <div className={`centered-page ${styles.page}`}>
       <div className={styles.brand}>
         <h1>Youth Awards</h1>
         <p>Admin dashboard</p>
       </div>
 
       <div className="card">
-        <h1>Log in</h1>
-        <p>Sign in to review nominations and manage nominees.</p>
+        <h2>Log in</h2>
+        <p className={styles.subtitle}>Sign in to review nominations and manage nominees.</p>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && <InlineError message={error} />}
         <form onSubmit={handleSubmit} noValidate>
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
+          <FormField id="email" label="Email">
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </FormField>
 
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
+          <FormField id="password" label="Password">
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormField>
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
-            {submitting ? 'Logging in…' : 'Log in'}
-          </button>
+          <Button type="submit" className="btn-block" loading={submitting} loadingLabel="Logging in">
+            Log in
+          </Button>
         </form>
       </div>
     </div>

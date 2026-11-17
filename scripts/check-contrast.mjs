@@ -73,6 +73,11 @@ const PAIRS = [
   // aliased through index.css's --color-sidebar(-text) onto the fixed brand fill.
   { name: 'admin sidebar text on brand-fill', fg: '#aab4d6', bg: 'brand-fill', large: false },
   { name: 'admin sidebar active text on brand-fill', fg: '#ffffff', bg: 'brand-fill', large: false },
+  // Semantic status pairs (StatusBadge, Toast, InlineError, FilterBar, etc.)
+  { name: 'success on success-bg', fg: 'success', bg: 'success-bg', large: false },
+  { name: 'warning on warning-bg', fg: 'warning', bg: 'warning-bg', large: false },
+  { name: 'danger on danger-bg', fg: 'danger', bg: 'danger-bg', large: false },
+  { name: 'info on info-bg', fg: 'info', bg: 'info-bg', large: false },
 ]
 
 function resolve(vars, token) {

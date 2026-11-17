@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { ToastProvider } from './components/admin/Toast/Toast'
 import { RequireAdmin } from './components/RequireAdmin/RequireAdmin'
 import { AdminLayout } from './components/AdminLayout/AdminLayout'
 import { HomePage } from './pages/HomePage/HomePage'
@@ -18,53 +19,55 @@ function NotFound() {
 export function App() {
   return (
     <AuthProvider>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/nominate" element={<NominatePage />} />
-        <Route path="/nominees" element={<NomineesPage />} />
-        <Route path="/admin/login" element={<LoginPage />} />
-        <Route
-          path="/admin/nominations"
-          element={
-            <RequireAdmin>
-              <AdminLayout>
-                <NominationsPage />
-              </AdminLayout>
-            </RequireAdmin>
-          }
-        />
-        <Route
-          path="/admin/nominees"
-          element={
-            <RequireAdmin>
-              <AdminLayout>
-                <AdminNomineesPage />
-              </AdminLayout>
-            </RequireAdmin>
-          }
-        />
-        <Route
-          path="/admin/categories"
-          element={
-            <RequireAdmin>
-              <AdminLayout>
-                <CategoriesPage />
-              </AdminLayout>
-            </RequireAdmin>
-          }
-        />
-        <Route
-          path="/admin/audit-log"
-          element={
-            <RequireAdmin>
-              <AdminLayout>
-                <AuditLogPage />
-              </AdminLayout>
-            </RequireAdmin>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <ToastProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/nominate" element={<NominatePage />} />
+          <Route path="/nominees" element={<NomineesPage />} />
+          <Route path="/admin/login" element={<LoginPage />} />
+          <Route
+            path="/admin/nominations"
+            element={
+              <RequireAdmin>
+                <AdminLayout>
+                  <NominationsPage />
+                </AdminLayout>
+              </RequireAdmin>
+            }
+          />
+          <Route
+            path="/admin/nominees"
+            element={
+              <RequireAdmin>
+                <AdminLayout>
+                  <AdminNomineesPage />
+                </AdminLayout>
+              </RequireAdmin>
+            }
+          />
+          <Route
+            path="/admin/categories"
+            element={
+              <RequireAdmin>
+                <AdminLayout>
+                  <CategoriesPage />
+                </AdminLayout>
+              </RequireAdmin>
+            }
+          />
+          <Route
+            path="/admin/audit-log"
+            element={
+              <RequireAdmin>
+                <AdminLayout>
+                  <AuditLogPage />
+                </AdminLayout>
+              </RequireAdmin>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ToastProvider>
     </AuthProvider>
   )
 }

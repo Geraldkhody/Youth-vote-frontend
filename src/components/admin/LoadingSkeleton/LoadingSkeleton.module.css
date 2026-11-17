@@ -1,0 +1,29 @@
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+}
+
+.bar {
+  height: 1.1rem;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    animation: none;
+  }
+}

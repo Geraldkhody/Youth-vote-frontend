@@ -55,6 +55,45 @@
   background: var(--accent-fill-hover);
 }
 
+.danger {
+  background: var(--surface);
+  color: var(--danger);
+  border-color: var(--border);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--danger-bg);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .btn:active:not(:disabled) {
     transform: scale(0.98);

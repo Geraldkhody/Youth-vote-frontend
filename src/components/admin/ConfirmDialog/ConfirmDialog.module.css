@@ -1,0 +1,30 @@
+.dialog {
+  width: min(420px, calc(100vw - 2rem));
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hover);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 1.5rem;
+}
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dialog h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.dialog p {
+  margin: 0 0 1rem;
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

@@ -10,12 +10,14 @@
   --color-primary-light: var(--brand-light);
   --color-primary-fill: var(--brand-fill);
   --color-primary-fill-hover: var(--brand-fill-hover);
-  --color-danger: #c0392b;
-  --color-danger-light: #fbeae8;
-  --color-success: #1f8a4c;
-  --color-success-light: #e9f7ef;
-  --color-warning-text: #8a6d00;
-  --color-warning-bg: #fff3cd;
+  --color-danger: var(--danger);
+  --color-danger-light: var(--danger-bg);
+  --color-success: var(--success);
+  --color-success-light: var(--success-bg);
+  --color-warning-text: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-info: var(--info);
+  --color-info-light: var(--info-bg);
   --color-accent: var(--accent);
   --color-accent-dark: var(--accent-fill-hover);
   --color-accent-light: var(--accent-light);
@@ -89,7 +91,7 @@ small {
 .error-message {
   color: var(--color-danger);
   background: var(--color-danger-light);
-  border: 1px solid #f1c3bd;
+  border: 1px solid color-mix(in srgb, var(--color-danger) 35%, var(--color-danger-light));
   border-radius: var(--radius-sm);
   padding: 0.75rem 1rem;
   margin: 0 0 1rem;
@@ -99,7 +101,7 @@ small {
 .success-message {
   color: var(--color-success);
   background: var(--color-success-light);
-  border: 1px solid #bfe6cd;
+  border: 1px solid color-mix(in srgb, var(--color-success) 35%, var(--color-success-light));
   border-radius: var(--radius-sm);
   padding: 0.75rem 1rem;
   margin: 0 0 1rem;
@@ -241,22 +243,17 @@ select:disabled {
   padding: 0 1rem 3rem;
 }
 
-.centered-page .card h1 {
+.centered-page .card h2 {
   font-size: 1.25rem;
   margin-bottom: 0.25rem;
-}
-
-.centered-page .card > p:first-of-type {
-  color: var(--color-text-muted);
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-  font-size: 0.9rem;
 }
 
 /* --- Status badges --- */
 
 .status-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -265,71 +262,37 @@ select:disabled {
   letter-spacing: 0.02em;
 }
 
+.status-badge svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
 .status-badge--pending {
   background: var(--color-warning-bg);
   color: var(--color-warning-text);
 }
 
-.status-badge--approved {
+.status-badge--approved,
+.status-badge--active {
   background: var(--color-success-light);
   color: var(--color-success);
 }
 
-.status-badge--rejected {
+.status-badge--rejected,
+.status-badge--inactive {
   background: var(--color-danger-light);
   color: var(--color-danger);
 }
 
-/* --- Admin tables --- */
-
-.table-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
-}
-
-table {
-  width: 100%;
-  min-width: 760px;
-  border-collapse: collapse;
-}
-
-thead {
-  background: color-mix(in srgb, var(--color-surface) 92%, var(--color-text) 8%);
-}
-
-th {
-  text-align: left;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--color-text-muted);
-  padding: 0.7rem 1rem;
-  border-bottom: 1px solid var(--color-border);
-}
-
-td {
-  text-align: left;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--color-border);
-  vertical-align: top;
-  font-size: 0.92rem;
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-tbody tr:hover {
-  background: color-mix(in srgb, var(--color-surface) 96%, var(--color-text) 4%);
-}
+/* --- Admin tables: see src/components/admin/DataTable for the styled
+   wrapper. These bare element rules just keep table markup sane wherever
+   DataTable isn't used (e.g. the expandable details row's <pre>). --- */
 
 .filters {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-end;
   gap: 1rem;
   margin-bottom: 1.25rem;
   padding: 1rem;
@@ -362,27 +325,3 @@ tbody tr:hover {
   display: flex;
   gap: 0.5rem;
 }
-
-.reject-form,
-.merge-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  background: var(--color-background);
-  padding: 0.6rem;
-  border-radius: var(--radius-sm);
-  width: 100%;
-}
-
-.reject-form input,
-.merge-form select {
-  flex: 1;
-  min-width: 160px;
-}
-
-/* .back-link {
-  display: inline-block;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-} */
