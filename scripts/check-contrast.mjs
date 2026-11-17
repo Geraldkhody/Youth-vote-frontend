@@ -69,6 +69,10 @@ const PAIRS = [
   { name: 'accent-ink on accent-fill-hover', fg: 'accent-ink', bg: 'accent-fill-hover', large: false },
   { name: 'accent on bg (large headline accent)', fg: 'accent', bg: 'bg', large: true },
   { name: 'ink on brand-light', fg: 'ink', bg: 'brand-light', large: false },
+  // Admin sidebar (src/components/AdminLayout/AdminLayout.module.css): literal colours
+  // aliased through index.css's --color-sidebar(-text) onto the fixed brand fill.
+  { name: 'admin sidebar text on brand-fill', fg: '#aab4d6', bg: 'brand-fill', large: false },
+  { name: 'admin sidebar active text on brand-fill', fg: '#ffffff', bg: 'brand-fill', large: false },
 ]
 
 function resolve(vars, token) {

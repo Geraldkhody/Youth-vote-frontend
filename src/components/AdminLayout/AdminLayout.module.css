@@ -42,8 +42,8 @@
 }
 
 .sidebar a:global(.active) {
-  color: white;
-  background: var(--color-primary);
+  color: var(--accent-ink);
+  background: var(--color-accent-fill);
 }
 
 .logout {
