@@ -1,10 +1,36 @@
-// Typed fetch wrapper for the Vote-R backend. All requests send the
-// session cookie so the admin login works through the Vite dev proxy.
+// Typed fetch wrapper for the Vote-R backend. Admin auth is a bearer token
+// (not a session cookie) stored in localStorage -- cookies don't reliably
+// cross from this frontend's domain to the API's on mobile browsers that
+// block third-party cookies, since the two are deployed on different domains.
 
 // Empty by default: dev uses the Vite proxy and prod is assumed same-origin.
 // Set VITE_API_BASE_URL (e.g. https://api.example.com) when the frontend
 // and backend are deployed on different origins.
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ''
+
+const TOKEN_STORAGE_KEY = 'admin_token'
+
+function getStoredToken(): string | null {
+  try {
+    return localStorage.getItem(TOKEN_STORAGE_KEY)
+  } catch {
+    // localStorage can throw (private browsing, blocked storage); treat
+    // that the same as "not logged in" rather than crashing the app.
+    return null
+  }
+}
+
+function setStoredToken(token: string | null): void {
+  try {
+    if (token) {
+      localStorage.setItem(TOKEN_STORAGE_KEY, token)
+    } else {
+      localStorage.removeItem(TOKEN_STORAGE_KEY)
+    }
+  } catch {
+    // Same as above -- login just won't persist across reloads.
+  }
+}
 
 export interface Category {
   id: number
@@ -76,10 +102,14 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const token = getStoredToken()
+  const headers: Record<string, string> = {}
+  if (options.body) headers['Content-Type'] = 'application/json'
+  if (token) headers['Authorization'] = `Bearer ${token}`
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    credentials: 'include',
-    headers: options.body ? { 'Content-Type': 'application/json' } : undefined,
     ...options,
+    headers,
   })
 
   if (!response.ok) {
@@ -154,15 +184,23 @@ export function getNominees(categoryId: number): Promise<NomineeSummary[]> {
 
 // --- Auth ---
 
-export function login(email: string, password: string): Promise<Admin> {
-  return request('/api/auth/login', {
+export async function login(email: string, password: string): Promise<Admin> {
+  const data = await request<Admin & { token: string }>('/api/auth/login', {
     method: 'POST',
     body: JSON.stringify({ email, password }),
   })
+  setStoredToken(data.token)
+  return { name: data.name, email: data.email }
 }
 
-export function logout(): Promise<void> {
-  return request('/api/auth/logout', { method: 'POST' })
+export async function logout(): Promise<void> {
+  try {
+    await request('/api/auth/logout', { method: 'POST' })
+  } finally {
+    // Clear the token even if the request itself fails -- logging out
+    // locally should never be blocked by a flaky network call.
+    setStoredToken(null)
+  }
 }
 
 export function getCurrentAdmin(): Promise<Admin> {
